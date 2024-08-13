@@ -8,7 +8,7 @@ class Game_Board:
 		self.board = [[]]
 
 	def dead_state(self):
-		self.board = [[0]*self.columns]*self.rows
+		self.board = [[0 for _ in range(self.columns)] for _ in range(self.rows)]
 		return
 
 	def random_state(self):
@@ -22,11 +22,13 @@ class Game_Board:
 		return
 
 	def render(self):
+		print(' ' + '-' * (self.columns + 2) + ' ')
 		for row in range(self.rows):
 			print('| ', end='')
 			for column in range(self.columns):
 				print(self.get_cell_symbol(row, column), end='')
 			print(' |')
+		print(' ' + '-' * (self.columns + 2) + ' ')
 
 	def get_cell_symbol(self, row, column):
 		return '#' if self.board[row][column] else '*'
