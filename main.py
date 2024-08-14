@@ -1,6 +1,7 @@
 from board_config import Game_Board
 import time
 from typing import List
+import sys
 
 grid1 = [
 [0,0,0,0,0],
@@ -11,15 +12,15 @@ grid1 = [
 ]
 
 # Take a .txt file and convert it to a 2d grid
-def load_board_state(file_path: str) -> List[List[int]]:
+def get_board_state(file_path: str) -> List[List[int]]:
 	grid = []
+	valid_chars = ['0', '1']
 	txt_file = open(file_path, 'r')
 
-	
 	for line in txt_file:
 		cur_line = []
 		for char in line:
-			if char == '0' or char == '1':
+			if char in valid_chars:
 				cur_line.append(int(char))
 		grid.append(cur_line)
 
@@ -56,25 +57,30 @@ def run_game():
 		board.next_state()
 	
 def run_big_game():
-	board = Game_Board(40, 80)
+	board = Game_Board(30, 60)
 	board.random_state()
 	while True:
 		board.render()
 		board.next_state()
-		time.sleep(.25)
+		time.sleep(.1)
 
 def run_custom_game(file_path):
+	initial_state = get_board_state(file_path)
 	board = Game_Board(0, 0)
-	initial_state = load_board_state(file_path)
 	board.set_board_state(initial_state)
 	while True:
 		board.render()
 		board.next_state()
-		time.sleep(.25)
+		time.sleep(0.2)
 
 def main():
-	run_custom_game('starting_states/toad.txt')
-	#run_big_game()
+	# Handle command line args
+	num_args = len(sys.argv)
+	
+	if num_args == 1:
+		run_big_game()
+	if num_args == 2:	
+		run_custom_game(f'starting_states/{sys.argv[1]}.txt')
 
 if __name__ == "__main__":
 	main()
