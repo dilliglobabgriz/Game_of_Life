@@ -64,14 +64,14 @@ def run_big_game():
 		board.next_state()
 		time.sleep(.1)
 
-def run_custom_game(file_path):
+def run_custom_game(file_path, delay = 0.2):
 	initial_state = get_board_state(file_path)
 	board = Game_Board(0, 0)
 	board.set_board_state(initial_state)
 	while True:
 		board.render()
 		board.next_state()
-		time.sleep(0.2)
+		time.sleep(delay)
 
 def main():
 	# Handle command line args
@@ -81,6 +81,9 @@ def main():
 		run_big_game()
 	if num_args == 2:	
 		run_custom_game(f'starting_states/{sys.argv[1]}.txt')
+	if num_args == 3:
+		run_custom_game(f'starting_states/{sys.argv[1]}.txt', float(sys.argv[2]))
+		
 
 if __name__ == "__main__":
 	main()
