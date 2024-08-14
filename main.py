@@ -21,9 +21,16 @@ def next_step_test():
 	board.next_state()
 	board.render()
 
+def run_game():
+	board = Game_Board(30, 60)
+	
+	while True:
+		board.render()
+		board.next_state()
+	
 
 def main():
-	next_step_test()
+	run_game()
 
 if __name__ == "__main__":
 	main()
