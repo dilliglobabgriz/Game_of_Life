@@ -8,14 +8,22 @@ def display_board_testing():
 	#board.display_board()
 	board.render()
 
-def next_state_test():
+def live_neighbor_test():
 	board = Game_Board(3,3)
 	board.random_state()
 	board.render()
 	print(board.get_live_neighbors(1, 1))
 
+def next_step_test():
+	board = Game_Board(30, 60)
+	board.random_state()
+	board.render()
+	board.next_state()
+	board.render()
+
+
 def main():
-	next_state_test()
+	next_step_test()
 
 if __name__ == "__main__":
 	main()

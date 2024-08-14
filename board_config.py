@@ -31,7 +31,7 @@ class Game_Board:
 		print(' ' + '-' * (self.columns + 2) + ' ')
 
 	def get_cell_symbol(self, row, column):
-		return '#' if self.board[row][column] else '*'
+		return '#' if self.board[row][column] else ' '
 
 
 	def get_live_neighbors(self, row, column):
@@ -44,5 +44,29 @@ class Game_Board:
 
 		return live_neighbors	
 
+	# Update each cell in the board to alive or dead based on rules of life
 	def next_state(self):
-		pass
+		for i in range(self.rows):
+			for j in range(self.columns):
+				self.board[i][j] = self.apply_rules_of_life(i, j)
+
+	# Takes a cell as input and returns 0 or 1 based on Conway's Game of Life
+	def apply_rules_of_life(self, row, column):
+		live_neighbors = self.get_live_neighbors(row, column)
+		status = 'alive' if self.board[row][column] == 1 else 'dead'		
+
+		# Logic tree
+		if status == 'dead':
+			if live_neighbors == 3:     # Reproduction
+				return 1
+			return 0
+		if live_neighbors > 3:               # Overpopulation
+			return 0
+		if live_neighbors >= 2:              # Goldylocks Zone
+			return 1
+		if live_neighbors >= 0:              # Underpopulation
+			return 0
+		else:				     # Error
+			return -1                   
+
+	
